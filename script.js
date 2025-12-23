@@ -1,0 +1,596 @@
+// Smooth scrolling for navigation links
+document.addEventListener("DOMContentLoaded", function () {
+  // Add smooth scrolling to all anchor links
+  const links = document.querySelectorAll('a[href^="#"]');
+
+  links.forEach((link) => {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      const targetId = this.getAttribute("href");
+      const targetElement = document.querySelector(targetId);
+
+      if (targetElement) {
+        const headerHeight = document.querySelector(".header").offsetHeight;
+        const targetPosition = targetElement.offsetTop - headerHeight - 20;
+
+        window.scrollTo({
+          top: targetPosition,
+          behavior: "smooth",
+        });
+      }
+    });
+  });
+
+  // Add scroll effect to header
+  const header = document.querySelector(".header");
+  let lastScrollTop = 0;
+
+  window.addEventListener("scroll", function () {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop && scrollTop > 100) {
+      // Scrolling down
+      header.style.transform = "translateY(-100%)";
+    } else {
+      // Scrolling up
+      header.style.transform = "translateY(0)";
+    }
+
+    lastScrollTop = scrollTop;
+  });
+
+  // Add fade-in animation to elements when they come into view
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px",
+  };
+
+  const observer = new IntersectionObserver(function (entries) {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("fade-in-up");
+      }
+    });
+  }, observerOptions);
+
+  // Observe all feature cards, screenshots, and other sections
+  const elementsToAnimate = document.querySelectorAll(
+    ".feature-card, .screenshot-item, .contact-method"
+  );
+  elementsToAnimate.forEach((element) => {
+    observer.observe(element);
+  });
+
+  // Mobile menu toggle (if needed in future)
+  function initMobileMenu() {
+    const navToggle = document.querySelector(".nav-toggle");
+    const navMenu = document.querySelector(".nav-menu");
+
+    if (navToggle && navMenu) {
+      navToggle.addEventListener("click", function () {
+        navMenu.classList.toggle("active");
+      });
+    }
+  }
+
+  initMobileMenu();
+
+  // Add click effect to buttons
+  const buttons = document.querySelectorAll(".btn");
+  buttons.forEach((button) => {
+    button.addEventListener("click", function (e) {
+      // Create ripple effect
+      const ripple = document.createElement("span");
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+
+      ripple.style.width = ripple.style.height = size + "px";
+      ripple.style.left = x + "px";
+      ripple.style.top = y + "px";
+      ripple.classList.add("ripple");
+
+      this.appendChild(ripple);
+
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
+  });
+
+  // Add typing effect to hero title (optional)
+  function typeWriter(element, text, speed = 100) {
+    let i = 0;
+    element.innerHTML = "";
+
+    function type() {
+      if (i < text.length) {
+        element.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(type, speed);
+      }
+    }
+
+    type();
+  }
+
+  // Initialize typing effect for hero title
+  const heroTitle = document.querySelector(".hero-title");
+  if (heroTitle) {
+    const originalText = heroTitle.textContent;
+    // Uncomment the line below to enable typing effect
+    // typeWriter(heroTitle, originalText, 50);
+  }
+
+  // Add parallax effect to hero section
+  function initParallax() {
+    const hero = document.querySelector(".hero");
+    const heroImage = document.querySelector(".hero-image");
+
+    if (hero && heroImage) {
+      window.addEventListener("scroll", function () {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.5;
+
+        heroImage.style.transform = `translateY(${rate}px)`;
+      });
+    }
+  }
+
+  initParallax();
+
+  // Add counter animation for statistics (if needed)
+  function animateCounters() {
+    const counters = document.querySelectorAll(".counter");
+
+    counters.forEach((counter) => {
+      const target = parseInt(counter.getAttribute("data-target"));
+      const duration = 2000; // 2 seconds
+      const increment = target / (duration / 16); // 60fps
+      let current = 0;
+
+      const timer = setInterval(() => {
+        current += increment;
+        counter.textContent = Math.floor(current);
+
+        if (current >= target) {
+          counter.textContent = target;
+          clearInterval(timer);
+        }
+      }, 16);
+    });
+  }
+
+  // Initialize counter animation when counters come into view
+  const counterObserver = new IntersectionObserver(function (entries) {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        animateCounters();
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  });
+
+  const counterSection = document.querySelector(".counters");
+  if (counterSection) {
+    counterObserver.observe(counterSection);
+  }
+
+  // Add form validation (if contact form is added in future)
+  function initFormValidation() {
+    const forms = document.querySelectorAll("form");
+
+    forms.forEach((form) => {
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const inputs = form.querySelectorAll(
+          "input[required], textarea[required]"
+        );
+        let isValid = true;
+
+        inputs.forEach((input) => {
+          if (!input.value.trim()) {
+            input.classList.add("error");
+            isValid = false;
+          } else {
+            input.classList.remove("error");
+          }
+        });
+
+        if (isValid) {
+          // Form is valid, submit it
+          console.log("Form submitted successfully");
+          // Add your form submission logic here
+        }
+      });
+    });
+  }
+
+  initFormValidation();
+
+  // Add lazy loading for images (when images are added)
+  function initLazyLoading() {
+    const images = document.querySelectorAll("img[data-src]");
+
+    const imageObserver = new IntersectionObserver(function (entries) {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          img.src = img.dataset.src;
+          img.classList.remove("lazy");
+          imageObserver.unobserve(img);
+        }
+      });
+    });
+
+    images.forEach((img) => {
+      imageObserver.observe(img);
+    });
+  }
+
+  initLazyLoading();
+
+  // Add theme toggle (if dark mode is needed)
+  function initThemeToggle() {
+    const themeToggle = document.querySelector(".theme-toggle");
+
+    if (themeToggle) {
+      themeToggle.addEventListener("click", function () {
+        document.body.classList.toggle("dark-theme");
+        localStorage.setItem(
+          "theme",
+          document.body.classList.contains("dark-theme") ? "dark" : "light"
+        );
+      });
+
+      // Load saved theme
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark-theme");
+      }
+    }
+  }
+
+  initThemeToggle();
+
+  // Language switcher & i18n
+  function initI18n() {
+    const translations = {
+      ja: {
+        page_title: "Pomodoro - 集中タイマーアプリ",
+        meta_description:
+          "Pomodoroは、ポモドーロテクニックに最適化された美しいiOSアプリです。カスタマイズ可能なポモドーロセッション、生産性の追跡、目標達成をサポートします。",
+
+        app_name: "Pomodoro",
+        nav_features: "機能",
+        nav_screenshots: "スクリーンショット",
+        nav_download: "ダウンロード",
+        nav_privacy: "プライバシー",
+        nav_contact: "お問い合わせ",
+
+        hero_title_line1: "集中して作業し、",
+        hero_title_line2: "ポモドーロで生産性を向上",
+        hero_description:
+          "Pomodoroは、ポモドーロテクニックに最適化された美しいiOSアプリです。作業時間と休憩時間をカスタマイズし、生産性を追跡し、目標を達成しましょう。",
+        hero_download_button: "App Storeでダウンロード",
+        hero_features_button: "機能を見る",
+
+        features_title: "主な機能",
+        feature_pomodoro_title: "ポモドーロタイマー",
+        feature_pomodoro_text:
+          "カスタマイズ可能なポモドーロセッションで集中して作業。作業時間と休憩時間を自分のスタイルに合わせて設定できます。",
+        feature_analytics_title: "生産性分析",
+        feature_analytics_text:
+          "ポモドーロセッションを追跡し、詳細な統計とチャートで生産性パターンを分析できます。",
+        feature_history_title: "セッション履歴",
+        feature_history_text:
+          "完了したポモドーロセッションを美しいカレンダー表示で確認。時間の経過とともに進捗を確認できます。",
+        feature_category_title: "カテゴリ管理",
+        feature_category_text:
+          "作業をカテゴリ別に整理。色とアイコンを使って視覚的に異なる種類の活動を追跡できます。",
+        feature_goals_title: "目標設定",
+        feature_goals_text:
+          "ポモドーロセッションの日次または週次の目標を設定。進捗を追跡し、モチベーションを維持できます。",
+        feature_notifications_title: "スマート通知",
+        feature_notifications_text:
+          "作業セッションと休憩時間の終了時に通知を受け取ります。好みに合わせて音をカスタマイズできます。",
+
+        screenshots_title: "スクリーンショット",
+        screenshots_main_title: "記録画面",
+        screenshots_main_text: "美しいポモドーロタイマーと洗練されたデザイン",
+        screenshots_analysis_title: "分析画面",
+        screenshots_analysis_text: "詳細な生産性分析とインサイト",
+        screenshots_history_title: "履歴画面",
+        screenshots_history_text: "すべてのポモドーロセッションを一目で確認",
+        screenshots_live_title: "目標",
+        screenshots_live_text: "目標と達成状況を追跡",
+
+        download_title: "ダウンロード",
+        download_heading: "App Storeで今すぐダウンロード",
+        download_subheading: "iOS 17.0以降に対応しています。",
+        download_button: "App Storeでダウンロード",
+        download_requirements_title: "システム要件",
+        download_requirements_ios: "iOS 17.0以降",
+        download_requirements_devices: "iPhone、iPad対応",
+        download_requirements_price: "無料ダウンロード",
+
+        privacy_title: "プライバシーポリシー",
+        privacy_handling_heading: "個人情報の取り扱いについて",
+        privacy_handling_text:
+          "Pomodoroは、ユーザーのプライバシーを尊重し、個人情報の保護に努めています。",
+        privacy_collect_heading: "収集する情報",
+        privacy_collect_text: "収集する情報はありません。",
+        privacy_storage_heading: "情報の保存",
+        privacy_storage_text:
+          "すべてのデータはデバイス内にローカル保存され、外部サーバーには送信されません。",
+        privacy_sharing_heading: "第三者との共有",
+        privacy_sharing_text:
+          "収集した情報を第三者と共有することはありません。",
+        privacy_contact_heading: "お問い合わせ",
+        privacy_contact_text_before: "プライバシーポリシーに関するご質問は、",
+        privacy_contact_link: "お問い合わせ",
+        privacy_contact_text_after: "までご連絡ください。",
+
+        contact_title: "お問い合わせ",
+        contact_intro:
+          "アプリに関するご質問、バグ報告、機能要望などがございましたら、お気軽にお問い合わせください。",
+        contact_email_heading: "📧 メール",
+        contact_bug_heading: "🐛 バグ報告",
+        contact_bug_text:
+          "アプリ内の不具合や問題を発見された場合は、上記メールアドレスまで詳細をお送りください。",
+        contact_feature_heading: "💡 機能要望",
+        contact_feature_text:
+          "新しい機能のご要望もお待ちしています。ユーザーの皆様の声を大切にしています。",
+
+        footer_copyright: "© 2025 Pomodoro. All rights reserved.",
+      },
+      en: {
+        page_title: "Pomodoro - Focus Timer App",
+        meta_description:
+          "Pomodoro is a beautiful iOS app designed for the Pomodoro Technique. Customize your work and break sessions, track your productivity, and achieve your goals.",
+
+        app_name: "Pomodoro",
+        nav_features: "Features",
+        nav_screenshots: "Screenshots",
+        nav_download: "Download",
+        nav_privacy: "Privacy",
+        nav_contact: "Contact",
+
+        hero_title_line1: "Focus on your work,",
+        hero_title_line2: "one Pomodoro at a time",
+        hero_description:
+          "Pomodoro is a beautiful iOS app designed for the Pomodoro Technique. Customize your work and break sessions, track your productivity, and achieve your goals with a simple and elegant interface.",
+        hero_download_button: "Download on the App Store",
+        hero_features_button: "View features",
+
+        features_title: "Main features",
+        feature_pomodoro_title: "Pomodoro Timer",
+        feature_pomodoro_text:
+          "Focus on your work with customizable Pomodoro sessions. Set your work and break durations to match your productivity style.",
+        feature_analytics_title: "Productivity Analytics",
+        feature_analytics_text:
+          "Track your Pomodoro sessions and analyze your productivity patterns with detailed statistics and charts.",
+        feature_history_title: "Session History",
+        feature_history_text:
+          "View all your completed Pomodoro sessions in a beautiful calendar view. See your progress over time.",
+        feature_category_title: "Category Management",
+        feature_category_text:
+          "Organize your work by categories. Use colors and icons to visually track different types of activities.",
+        feature_goals_title: "Goal Setting",
+        feature_goals_text:
+          "Set daily or weekly goals for your Pomodoro sessions. Track your progress and stay motivated.",
+        feature_notifications_title: "Smart Notifications",
+        feature_notifications_text:
+          "Get notified when work sessions and breaks end. Customize sounds to match your preferences.",
+
+        screenshots_title: "Screenshots",
+        screenshots_main_title: "Record Screen",
+        screenshots_main_text: "Beautiful Pomodoro timer with elegant design",
+        screenshots_analysis_title: "Analytics Screen",
+        screenshots_analysis_text:
+          "Detailed productivity analysis and insights",
+        screenshots_history_title: "History Screen",
+        screenshots_history_text: "View all your Pomodoro sessions at a glance",
+        screenshots_live_title: "Goals",
+        screenshots_live_text: "Track your goals and achievements",
+
+        download_title: "Download",
+        download_heading: "Download now on the App Store",
+        download_subheading: "Supports iOS 17.0 and later.",
+        download_button: "Download on the App Store",
+        download_requirements_title: "System requirements",
+        download_requirements_ios: "iOS 17.0 or later",
+        download_requirements_devices: "Works on iPhone and iPad",
+        download_requirements_price: "Free download",
+
+        privacy_title: "Privacy Policy",
+        privacy_handling_heading: "Handling of personal information",
+        privacy_handling_text:
+          "Pomodoro respects your privacy and strives to protect your personal information.",
+        privacy_collect_heading: "Information we collect",
+        privacy_collect_text: "We do not collect any personal information.",
+        privacy_storage_heading: "Data storage",
+        privacy_storage_text:
+          "All data is stored locally on your device and is never sent to external servers.",
+        privacy_sharing_heading: "Sharing with third parties",
+        privacy_sharing_text:
+          "We never share your information with third parties.",
+        privacy_contact_heading: "Contact",
+        privacy_contact_text_before:
+          "If you have any questions about this privacy policy, please contact us from ",
+        privacy_contact_link: "Contact",
+        privacy_contact_text_after: ".",
+
+        contact_title: "Contact",
+        contact_intro:
+          "If you have any questions about the app, want to report a bug, or request a feature, feel free to contact us.",
+        contact_email_heading: "📧 Email",
+        contact_bug_heading: "🐛 Bug reports",
+        contact_bug_text:
+          "If you find any issues or bugs in the app, please send the details to the email address above.",
+        contact_feature_heading: "💡 Feature requests",
+        contact_feature_text:
+          "We also welcome requests for new features. We value feedback from all our users.",
+
+        footer_copyright: "© 2025 Pomodoro. All rights reserved.",
+      },
+    };
+
+    const langButtons = document.querySelectorAll(".lang-btn");
+    const i18nElements = document.querySelectorAll("[data-i18n-key]");
+
+    function applyLanguage(lang) {
+      const dict = translations[lang] || translations.ja;
+
+      i18nElements.forEach((el) => {
+        const key = el.getAttribute("data-i18n-key");
+        const value = dict[key];
+        if (!value) return;
+
+        const tag = el.tagName.toLowerCase();
+        if (tag === "input" || tag === "textarea") {
+          el.placeholder = value;
+        } else {
+          el.textContent = value;
+        }
+      });
+
+      // Update localized images
+      const localizedImages = document.querySelectorAll(
+        "img[data-src-ja], img[data-src-en]"
+      );
+
+      localizedImages.forEach((img) => {
+        const jaSrc = img.getAttribute("data-src-ja");
+        const enSrc = img.getAttribute("data-src-en");
+
+        if (lang === "en" && enSrc) {
+          img.src = enSrc;
+        } else if (jaSrc) {
+          img.src = jaSrc;
+        }
+      });
+
+      // Update html lang attribute
+      document.documentElement.lang = lang === "en" ? "en" : "ja";
+
+      // Update title and meta description
+      if (dict.page_title) {
+        document.title = dict.page_title;
+      }
+
+      const metaDescription = document.querySelector(
+        'meta[name="description"]'
+      );
+      if (metaDescription && dict.meta_description) {
+        metaDescription.setAttribute("content", dict.meta_description);
+      }
+
+      // Update active state on language buttons
+      langButtons.forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+      });
+
+      localStorage.setItem("language", lang);
+
+      // Reflect language in URL (e.g. ?lang=ja or ?lang=en)
+      try {
+        const url = new URL(window.location.href);
+        url.searchParams.set("lang", lang);
+        window.history.replaceState({}, "", url);
+      } catch (e) {
+        // URL API not available; safely ignore
+      }
+    }
+
+    langButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const lang = btn.dataset.lang;
+        applyLanguage(lang);
+      });
+    });
+
+    // Determine initial language from URL, saved setting, or browser
+    const searchParams = new URLSearchParams(window.location.search);
+    const rawUrlLang = (searchParams.get("lang") || "").toLowerCase();
+    let urlLang = null;
+    if (rawUrlLang.startsWith("en")) {
+      urlLang = "en";
+    } else if (rawUrlLang.startsWith("ja")) {
+      urlLang = "ja";
+    }
+
+    const savedLang = localStorage.getItem("language");
+    const browserLang = (navigator.language || "en").toLowerCase();
+    const initialLang =
+      urlLang || savedLang || (browserLang.startsWith("ja") ? "ja" : "en");
+
+    applyLanguage(initialLang);
+  }
+
+  initI18n();
+});
+
+// Add CSS for ripple effect
+const style = document.createElement("style");
+style.textContent = `
+    .btn {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.3);
+        transform: scale(0);
+        animation: ripple-animation 0.6s linear;
+        pointer-events: none;
+    }
+    
+    @keyframes ripple-animation {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+    
+    .header {
+        transition: transform 0.3s ease;
+    }
+    
+    .lazy {
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    
+    .lazy.loaded {
+        opacity: 1;
+    }
+    
+    .error {
+        border-color: #ff4444 !important;
+        box-shadow: 0 0 0 2px rgba(255, 68, 68, 0.2) !important;
+    }
+    
+    .dark-theme {
+        background-color: #1a1a1a;
+        color: #ffffff;
+    }
+    
+    .dark-theme .header {
+        background-color: #2a2a2a;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .dark-theme .feature-card,
+    .dark-theme .contact-method,
+    .dark-theme .privacy-content {
+        background-color: #2a2a2a;
+        color: #ffffff;
+    }
+`;
+document.head.appendChild(style);

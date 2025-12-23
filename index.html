@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pomodoro - Focus Timer App</title>
+    <meta
+      name="description"
+      content="Pomodoro is a beautiful iOS app for the Pomodoro Technique. Focus on your work with customizable Pomodoro sessions, track your productivity, and achieve your goals."
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="images/app_icon.png" />
+    <link rel="apple-touch-icon" href="images/app_icon.png" />
+  </head>
+  <body>
+    <header class="header">
+      <nav class="nav">
+        <div class="nav-container">
+          <div class="nav-logo">
+            <h1 data-i18n-key="app_name">Pomodoro</h1>
+          </div>
+          <ul class="nav-menu">
+            <li>
+              <a href="#features" data-i18n-key="nav_features">機能</a>
+            </li>
+            <li>
+              <a href="#screenshots" data-i18n-key="nav_screenshots"
+                >スクリーンショット</a
+              >
+            </li>
+            <li>
+              <a href="#download" data-i18n-key="nav_download">ダウンロード</a>
+            </li>
+            <li>
+              <a href="#privacy" data-i18n-key="nav_privacy">プライバシー</a>
+            </li>
+            <li>
+              <a href="#contact" data-i18n-key="nav_contact">お問い合わせ</a>
+            </li>
+          </ul>
+          <div class="language-switcher">
+            <button class="lang-btn" data-lang="ja">日本語</button>
+            <span class="lang-separator">|</span>
+            <button class="lang-btn active" data-lang="en">English</button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-container">
+          <div class="hero-content">
+            <h2 class="hero-title">
+              <span data-i18n-key="hero_title_line1">Focus on your work,</span
+              ><br />
+              <span data-i18n-key="hero_title_line2"
+                >one Pomodoro at a time</span
+              >
+            </h2>
+            <p class="hero-description" data-i18n-key="hero_description">
+              Pomodoro is a beautiful iOS app designed for the Pomodoro
+              Technique. Customize your work and break sessions, track your
+              productivity, and achieve your goals with a simple and elegant
+              interface.
+            </p>
+            <div class="hero-buttons">
+              <a
+                href="#download"
+                class="btn btn-primary"
+                data-i18n-key="hero_download_button"
+                >App Storeでダウンロード</a
+              >
+              <a
+                href="#features"
+                class="btn btn-secondary"
+                data-i18n-key="hero_features_button"
+                >機能を見る</a
+              >
+            </div>
+          </div>
+          <div class="hero-image">
+            <img
+              src="images/app_icon.png"
+              alt="Pomodoro app icon"
+              class="app-icon"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section id="features" class="features">
+        <div class="container">
+          <h2 class="section-title" data-i18n-key="features_title">主な機能</h2>
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <div class="icon-placeholder">🍅</div>
+              </div>
+              <h3 data-i18n-key="feature_pomodoro_title">Pomodoro Timer</h3>
+              <p data-i18n-key="feature_pomodoro_text">
+                Focus on your work with customizable Pomodoro sessions. Set your
+                work and break durations to match your productivity style.
+              </p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <div class="icon-placeholder">📊</div>
+              </div>
+              <h3 data-i18n-key="feature_analytics_title">
+                Productivity Analytics
+              </h3>
+              <p data-i18n-key="feature_analytics_text">
+                Track your Pomodoro sessions and analyze your productivity
+                patterns with detailed statistics and charts.
+              </p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <div class="icon-placeholder">📅</div>
+              </div>
+              <h3 data-i18n-key="feature_history_title">Session History</h3>
+              <p data-i18n-key="feature_history_text">
+                View all your completed Pomodoro sessions in a beautiful
+                calendar view. See your progress over time.
+              </p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <div class="icon-placeholder">🏷️</div>
+              </div>
+              <h3 data-i18n-key="feature_category_title">
+                Category Management
+              </h3>
+              <p data-i18n-key="feature_category_text">
+                Organize your work by categories. Use colors and icons to
+                visually track different types of activities.
+              </p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <div class="icon-placeholder">🎯</div>
+              </div>
+              <h3 data-i18n-key="feature_goals_title">Goal Setting</h3>
+              <p data-i18n-key="feature_goals_text">
+                Set daily or weekly goals for your Pomodoro sessions. Track your
+                progress and stay motivated.
+              </p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <div class="icon-placeholder">🔔</div>
+              </div>
+              <h3 data-i18n-key="feature_notifications_title">
+                Smart Notifications
+              </h3>
+              <p data-i18n-key="feature_notifications_text">
+                Get notified when work sessions and breaks end. Customize sounds
+                to match your preferences.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Screenshots Section -->
+      <section id="screenshots" class="screenshots">
+        <div class="container">
+          <h2 class="section-title" data-i18n-key="screenshots_title">
+            スクリーンショット
+          </h2>
+          <div class="screenshots-grid">
+            <div class="screenshot-item">
+              <div class="screenshot-placeholder">
+                <img
+                  src="screen_images/japanese/record.png"
+                  data-src-ja="screen_images/japanese/record.png"
+                  data-src-en="screen_images/english/record.png"
+                  alt="Record screen screenshot"
+                  class="screenshot-image"
+                />
+              </div>
+              <h3 data-i18n-key="screenshots_main_title">Record Screen</h3>
+              <p data-i18n-key="screenshots_main_text">
+                Beautiful Pomodoro timer with elegant design
+              </p>
+            </div>
+            <div class="screenshot-item">
+              <div class="screenshot-placeholder">
+                <img
+                  src="screen_images/english/analysis.png"
+                  data-src-ja="screen_images/japanese/analysis.png"
+                  data-src-en="screen_images/english/analysis.png"
+                  alt="Analytics screen screenshot"
+                  class="screenshot-image"
+                />
+              </div>
+              <h3 data-i18n-key="screenshots_analysis_title">
+                Analytics Screen
+              </h3>
+              <p data-i18n-key="screenshots_analysis_text">
+                Detailed productivity analysis and insights
+              </p>
+            </div>
+            <div class="screenshot-item">
+              <div class="screenshot-placeholder">
+                <img
+                  src="screen_images/english/history.png"
+                  data-src-ja="screen_images/japanese/history.png"
+                  data-src-en="screen_images/english/history.png"
+                  alt="History screen screenshot"
+                  class="screenshot-image"
+                />
+              </div>
+              <h3 data-i18n-key="screenshots_history_title">History Screen</h3>
+              <p data-i18n-key="screenshots_history_text">
+                View all your Pomodoro sessions at a glance
+              </p>
+            </div>
+            <div class="screenshot-item">
+              <div class="screenshot-placeholder">
+                <img
+                  src="screen_images/english/goal.png"
+                  data-src-ja="screen_images/japanese/goal.png"
+                  data-src-en="screen_images/english/goal.png"
+                  alt="Goals screen screenshot"
+                  class="screenshot-image"
+                />
+              </div>
+              <h3 data-i18n-key="screenshots_live_title">Goals</h3>
+              <p data-i18n-key="screenshots_live_text">
+                Track your goals and achievements
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Download Section -->
+      <section id="download" class="download">
+        <div class="container">
+          <h2 class="section-title" data-i18n-key="download_title">
+            ダウンロード
+          </h2>
+          <div class="download-content">
+            <div class="download-info">
+              <h3 data-i18n-key="download_heading">
+                App Storeで今すぐダウンロード
+              </h3>
+              <p data-i18n-key="download_subheading">
+                iOS 17.0以降に対応しています。
+              </p>
+              <div class="download-buttons">
+                <a
+                  href="#"
+                  class="app-store-button"
+                  data-i18n-key="download_button"
+                >
+                  <!-- ここにApp Storeダウンロードボタンの画像を挿入 -->
+                  <div class="app-store-placeholder">
+                    <p>App Storeでダウンロード</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="download-requirements">
+              <h4 data-i18n-key="download_requirements_title">システム要件</h4>
+              <ul>
+                <li data-i18n-key="download_requirements_ios">iOS 17.0以降</li>
+                <li data-i18n-key="download_requirements_devices">
+                  iPhone、iPad対応
+                </li>
+                <li data-i18n-key="download_requirements_price">
+                  無料ダウンロード
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Privacy Policy Section -->
+      <section id="privacy" class="privacy">
+        <div class="container">
+          <h2 class="section-title" data-i18n-key="privacy_title">
+            プライバシーポリシー
+          </h2>
+          <div class="privacy-content">
+            <h3 data-i18n-key="privacy_handling_heading">
+              個人情報の取り扱いについて
+            </h3>
+            <p data-i18n-key="privacy_handling_text">
+              Timeryは、ユーザーのプライバシーを尊重し、個人情報の保護に努めています。
+            </p>
+
+            <h4 data-i18n-key="privacy_collect_heading">収集する情報</h4>
+            <p data-i18n-key="privacy_collect_text">
+              収集する情報はありません。
+            </p>
+
+            <h4 data-i18n-key="privacy_storage_heading">情報の保存</h4>
+            <p data-i18n-key="privacy_storage_text">
+              すべてのデータはデバイス内にローカル保存され、外部サーバーには送信されません。
+            </p>
+
+            <h4 data-i18n-key="privacy_sharing_heading">第三者との共有</h4>
+            <p data-i18n-key="privacy_sharing_text">
+              収集した情報を第三者と共有することはありません。
+            </p>
+
+            <h4 data-i18n-key="privacy_contact_heading">お問い合わせ</h4>
+            <p>
+              <span data-i18n-key="privacy_contact_text_before">
+                プライバシーポリシーに関するご質問は、
+              </span>
+              <a href="#contact" data-i18n-key="privacy_contact_link"
+                >お問い合わせ</a
+              >
+              <span data-i18n-key="privacy_contact_text_after">
+                までご連絡ください。
+              </span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" class="contact">
+        <div class="container">
+          <h2 class="section-title" data-i18n-key="contact_title">
+            お問い合わせ
+          </h2>
+          <div class="contact-content">
+            <p data-i18n-key="contact_intro">
+              アプリに関するご質問、バグ報告、機能要望などがございましたら、お気軽にお問い合わせください。
+            </p>
+
+            <div class="contact-methods">
+              <div class="contact-method">
+                <h3 data-i18n-key="contact_email_heading">📧 メール</h3>
+                <p>
+                  <a href="mailto:angocat215@gmail.com">angocat215@gmail.com</a>
+                </p>
+              </div>
+
+              <div class="contact-method">
+                <h3 data-i18n-key="contact_bug_heading">🐛 バグ報告</h3>
+                <p data-i18n-key="contact_bug_text">
+                  アプリ内の不具合や問題を発見された場合は、上記メールアドレスまで詳細をお送りください。
+                </p>
+              </div>
+
+              <div class="contact-method">
+                <h3 data-i18n-key="contact_feature_heading">💡 機能要望</h3>
+                <p data-i18n-key="contact_feature_text">
+                  新しい機能のご要望もお待ちしています。ユーザーの皆様の声を大切にしています。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-bottom">
+          <p data-i18n-key="footer_copyright">
+            &copy; 2025 Pomodoro. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
